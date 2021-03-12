@@ -48,7 +48,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1 className="Title">Check it Off</h1>
+        <h1 className="Title">What To Do</h1>
         <TodoForm addTodo={this.addTodo}/>
         <TodoContainer deleteTodo={this.deleteTodo} todos={this.state.todos}/> 
       </div>
