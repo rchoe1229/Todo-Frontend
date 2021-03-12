@@ -1,25 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css'
+import TodoForm from './components/TodoForm'
+import TodoContainer from './containers/TodoContainer'
+
+const todosUrl = 'http://localhost:3000/todos'
+
+export default class App extends Component {
+  
+  state = {
+    todos: []
+  }
+  
+  componentDidMount(){
+    this.getTodos()
+  }
+
+  getTodos = () => {
+    fetch(todosUrl)
+      .then(response => response.json())
+      .then(todos => this.setState({todos}))
+  }
+
+  addTodo = (newTodo) => {
+    this.setState({
+      todos: [...this.state.todos, newTodo]
+    })
+
+    fetch(todosUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newTodo)
+    })
+  }
+
+  deleteTodo = (id) => {
+    let filtered = this.state.todos.filter(todo => todo.id !== id )
+    this.setState({
+      todos: filtered
+    })
+
+    fetch(todosUrl + `/${id}`, {method: "DELETE"})
+  }
+  
+  render() {
+    return (
+      <div className="App">
+        <h1 className="Title">Check it Off</h1>
+        <TodoForm addTodo={this.addTodo}/>
+        <TodoContainer deleteTodo={this.deleteTodo} todos={this.state.todos}/> 
+      </div>
+    )
+  }
 }
-
-export default App;
