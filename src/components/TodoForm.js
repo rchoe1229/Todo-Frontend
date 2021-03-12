@@ -32,21 +32,21 @@ export default class TodoForm extends Component {
     return (
       <form className="todo-form" onSubmit={this.handleSubmit}>
         <h2>Create New Task</h2>
-        <label>Title</label>
+        <label>Task</label>
         <input
           type="text"
           name="title"
           value={title}
           onChange={this.handleChange}
         />
-        <label>Content</label>
+        <label>Description</label>
         <input
           type="text"
           name="content"
           value={content}
           onChange={this.handleChange}
         />
-        <div className="urgent-input">
+        {/* <div className="urgent-input">
           <label>Urgent</label>
           <input
             type="checkbox"
@@ -54,7 +54,7 @@ export default class TodoForm extends Component {
             checked={urgent}
             onChange={this.handleChange}
           />
-        </div>
+        </div> */}
         <input type="submit" className="submit" />
       </form>
     );
